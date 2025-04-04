@@ -36,26 +36,12 @@ def search():
     if not all([customer, carline, cp_name]):
         return render_template('results.html', error="All search parameters are required.")
     
-    # Search for the CP with matching criteria (case-insensitive)
-    # Using "LIKE" with %-wildcards for more flexible CP name matching
+    # Search for the CP with matching criteria
     cp_result = CP.query.filter(
-        func.lower(CP.Client_ID_1) == func.lower(customer),
-        func.lower(CP.PRJ_ID1) == func.lower(carline),
-        func.lower(CP.CP).like(f"%{cp_name.lower()}%")
+        CP.Client_ID_1 == customer,
+        CP.PRJ_ID1 == carline,
+        CP.CP == cp_name
     ).first()
-    
-    if not cp_result:
-        # Try direct CP ID search if it's a number
-        try:
-            cp_id = int(cp_name)
-            cp_result = CP.query.filter(
-                func.lower(CP.Client_ID_1) == func.lower(customer),
-                func.lower(CP.PRJ_ID1) == func.lower(carline),
-                CP.CP_ID == cp_id
-            ).first()
-        except ValueError:
-            # Not a numeric ID, so ignore this search attempt
-            pass
     
     if not cp_result:
         return render_template('results.html', error="No matching CP found.")

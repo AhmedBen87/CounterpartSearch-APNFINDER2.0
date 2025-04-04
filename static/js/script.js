@@ -1,3 +1,4 @@
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // ===== Form validation =====
@@ -22,9 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     customerButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Reset previously selected button
-            customerButtons.forEach(btn => btn.classList.remove('active', 'btn-primary'));
-            btn.classList.add('btn-outline-primary');
+            // Reset previously selected buttons
+            customerButtons.forEach(btn => {
+                btn.classList.remove('active', 'btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
             
             // Mark this button as selected
             this.classList.remove('btn-outline-primary');
@@ -62,8 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     button.textContent = carline;
                     
                     button.addEventListener('click', function() {
-                        // Reset previously selected button
-                        document.querySelectorAll('.carline-btn').forEach(btn => {
+                        // Reset previously selected buttons
+                        const allCarlineButtons = document.querySelectorAll('.carline-btn');
+                        allCarlineButtons.forEach(btn => {
                             btn.classList.remove('active', 'btn-secondary');
                             btn.classList.add('btn-outline-secondary');
                         });

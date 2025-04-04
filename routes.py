@@ -36,11 +36,11 @@ def search():
     if not all([customer, carline, cp_name]):
         return render_template('results.html', error="All search parameters are required.")
     
-    # Search for the CP with matching criteria (case-insensitive)
+    # Search for the CP with matching criteria
     cp_result = CP.query.filter(
-        func.lower(CP.Client_ID_1) == func.lower(customer),
-        func.lower(CP.PRJ_ID1) == func.lower(carline),
-        func.lower(CP.CP) == func.lower(cp_name)
+        CP.Client_ID_1 == customer,
+        CP.PRJ_ID1 == carline,
+        CP.CP == cp_name
     ).first()
     
     if not cp_result:

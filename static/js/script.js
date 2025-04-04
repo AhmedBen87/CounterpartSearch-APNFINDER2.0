@@ -81,6 +81,54 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Show CP input section
                         document.getElementById('cpInputSection').classList.remove('d-none');
+                        
+                        // Initialize CP input autocomplete
+                        const cpInput = document.getElementById('cpName');
+                        const suggestionsList = document.createElement('ul');
+                        suggestionsList.className = 'suggestions-list list-group position-absolute w-100 d-none';
+                        cpInput.parentNode.style.position = 'relative';
+                        cpInput.parentNode.appendChild(suggestionsList);
+                        
+                        let typingTimer;
+                        cpInput.addEventListener('input', function() {
+                            clearTimeout(typingTimer);
+                            const searchTerm = this.value.trim();
+                            
+                            if (searchTerm.length < 1) {
+                                suggestionsList.classList.add('d-none');
+                                return;
+                            }
+                            
+                            typingTimer = setTimeout(() => {
+                                fetch(`/search_suggestions?customer=${customerInput.value}&carline=${carline}&term=${searchTerm}`)
+                                    .then(response => response.json())
+                                    .then(suggestions => {
+                                        suggestionsList.innerHTML = '';
+                                        if (suggestions.length > 0) {
+                                            suggestions.forEach(suggestion => {
+                                                const li = document.createElement('li');
+                                                li.className = 'list-group-item list-group-item-action';
+                                                li.textContent = suggestion.cp;
+                                                li.addEventListener('click', () => {
+                                                    cpInput.value = suggestion.cp;
+                                                    suggestionsList.classList.add('d-none');
+                                                });
+                                                suggestionsList.appendChild(li);
+                                            });
+                                            suggestionsList.classList.remove('d-none');
+                                        } else {
+                                            suggestionsList.classList.add('d-none');
+                                        }
+                                    });
+                            }, 300);
+                        });
+                        
+                        // Hide suggestions when clicking outside
+                        document.addEventListener('click', (e) => {
+                            if (!cpInput.contains(e.target) && !suggestionsList.contains(e.target)) {
+                                suggestionsList.classList.add('d-none');
+                            }
+                        });
                     });
                     
                     carlineButtons.appendChild(button);

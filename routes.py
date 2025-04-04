@@ -1,8 +1,23 @@
 from flask import render_template, request, jsonify
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from app import app, db
 from models import CP, APN
 from helpers import get_apn_details
+
+@app.route('/search_suggestions')
+def search_suggestions():
+    customer = request.args.get('customer')
+    carline = request.args.get('carline')
+    term = request.args.get('term', '').lower()
+    
+    query = CP.query.filter(
+        func.lower(CP.Client_ID_1) == func.lower(customer),
+        func.lower(CP.PRJ_ID1) == func.lower(carline),
+        func.lower(CP.CP).contains(func.lower(term))
+    ).limit(10)
+    
+    suggestions = [{'cp': cp.CP} for cp in query.all()]
+    return jsonify(suggestions)
 
 @app.route('/')
 def index():
@@ -37,11 +52,13 @@ def search():
         return render_template('results.html', error="All search parameters are required.")
     
     # Search for the CP with matching criteria
-    cp_result = CP.query.filter(
-        CP.Client_ID_1 == customer,
-        CP.PRJ_ID1 == carline,
-        CP.CP == cp_name
-    ).first()
+    cp_results = CP.query.filter(
+        func.lower(CP.Client_ID_1) == func.lower(customer),
+        func.lower(CP.PRJ_ID1) == func.lower(carline),
+        func.lower(CP.CP).contains(func.lower(cp_name))
+    ).all()
+    
+    if not cp_results:
     
     if not cp_result:
         return render_template('results.html', error="No matching CP found.")

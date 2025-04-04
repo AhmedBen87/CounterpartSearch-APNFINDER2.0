@@ -79,3 +79,17 @@
     border-color: var(--bs-danger);
     box-shadow: 0 0 0 0.25rem rgba(var(--bs-danger-rgb), 0.25);
 }
+.suggestions-list {
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.suggestions-list .list-group-item {
+    cursor: pointer;
+}
+
+.suggestions-list .list-group-item:hover {
+    background-color: #f8f9fa;
+}

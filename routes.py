@@ -59,9 +59,10 @@ def search():
     ).all()
     
     if not cp_results:
-    
-    if not cp_result:
         return render_template('results.html', error="No matching CP found.")
+    
+    # Use the first matching CP result
+    cp_result = cp_results[0]
     
     # Gather the APN details for this CP
     apn_details = get_apn_details(cp_result)

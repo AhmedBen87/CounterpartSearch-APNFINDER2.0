@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
     customerButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Reset previously selected buttons
-            customerButtons.forEach(btn => {
-                btn.classList.remove('active', 'btn-primary');
-                btn.classList.add('btn-outline-primary');
+            customerButtons.forEach(button => {
+                button.classList.remove('active', 'btn-primary');
+                button.classList.add('btn-outline-primary');
             });
             
             // Mark this button as selected
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     button.addEventListener('click', function() {
                         // Reset previously selected buttons
                         const allCarlineButtons = document.querySelectorAll('.carline-btn');
-                        allCarlineButtons.forEach(btn => {
+                        allCarlineButtons.forEach(button => {
                             btn.classList.remove('active', 'btn-secondary');
                             btn.classList.add('btn-outline-secondary');
                         });

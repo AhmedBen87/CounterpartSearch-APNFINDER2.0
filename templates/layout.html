@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APTIV Probes Database</title>
+    <title>APN Finder 2.0</title>
     
     <!-- Bootstrap CSS (Replit theme) -->
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
@@ -14,12 +14,12 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-database me-2"></i>
-                APTIV Probes Database
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('serve_aptiv_logo') }}" alt="APTIV Logo" class="aptiv-logo me-2">
+                <span>APN Finder 2.0</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,7 @@
         </div>
     </nav>
 
-    <main class="container py-4">
+    <main class="container py-4 flex-grow-1">
         {% if error %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ error }}
@@ -45,9 +45,17 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-dark text-light py-3 mt-4">
+    <footer class="footer mt-auto py-3 bg-dark text-light">
         <div class="container text-center">
-            <p class="mb-0">© 2023 APTIV Probes Database</p>
+            <p class="mb-0">© 2025 APN Finder 2.0</p>
+            <span class="text-muted">
+                <i class="fas fa-signature me-2"></i>
+                AHMED BENMIMOUN - Maintenance Department, APTIV M6
+            </span>
+            <div class="text-muted mt-1">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                Cité Mohammed VI Tanger Tech (SATT)
+            </div>
         </div>
     </footer>
 

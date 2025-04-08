@@ -20,7 +20,12 @@
                         <div class="d-flex flex-wrap gap-2">
                             {% for customer in customers %}
                             <button type="button" class="btn btn-outline-primary customer-btn" data-customer="{{ customer }}">
-                                {{ customer }}
+                                {% if customer %}
+                                <img src="{{ url_for('serve_customer_logo', filename=customer + '.png') }}" 
+                                     alt="{{ customer }} logo" 
+                                     class="customer-logo me-2"
+                                     onerror="this.src='{{ url_for('serve_customer_logo', filename=customer + '.jpg') }}'">
+                                {% endif %}
                             </button>
                             {% endfor %}
                         </div>

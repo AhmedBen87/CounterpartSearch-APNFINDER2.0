@@ -1,4 +1,4 @@
-from app import db
+from extensions import db
 
 class APN(db.Model):
     """APTIV Part Number model"""
